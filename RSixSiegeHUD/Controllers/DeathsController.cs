@@ -94,7 +94,7 @@ namespace RSixSiegeHUD.Controllers
             _context.Deaths.Add(death);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDeath", new { id = death.DeathId }, death);
+            return CreatedAtAction("GetDeath", new {id = death.DeathId}, death);
         }
 
         // DELETE: api/Deaths/5
