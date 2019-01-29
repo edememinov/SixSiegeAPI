@@ -1,0 +1,37 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/Users/jeroen/Projects/Personal/SixSiegeAPI/RSixSiegeHUD/RSixSiegeHUD.csproj",
+    "projectName": "RSixSiegeHUD",
+    "projectPath": "/Users/jeroen/Projects/Personal/SixSiegeAPI/RSixSiegeHUD/RSixSiegeHUD.csproj",
+    "outputPath": "/Users/jeroen/Projects/Personal/SixSiegeAPI/RSixSiegeHUD/",
+    "projectStyle": "PackageReference",
+    "originalTargetFrameworks": [
+      "netcoreapp2.1"
+    ],
+    "frameworks": {
+      "netcoreapp2.1": {
+        "projectReferences": {}
+      }
+    }
+  },
+  "frameworks": {
+    "netcoreapp2.1": {
+      "dependencies": {
+        "Microsoft.AspNetCore.App": {
+          "target": "Package",
+          "version": "(, )"
+        },
+        "Microsoft.AspNetCore.Razor.Design": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.1.2, )"
+        },
+        "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+          "target": "Package",
+          "version": "[2.1.1, )"
+        }
+      }
+    }
+  }
+}
