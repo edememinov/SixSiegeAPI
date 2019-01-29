@@ -97,6 +97,19 @@ namespace RSixSiegeHUD.Controllers
             return CreatedAtAction("GetRoundOutcome", new { id = roundOutcome.RoundOutcomeId }, roundOutcome);
         }
 
+        public async Task<IActionResult> PersistRoundOutcome(RoundOutcome roundOutcome)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.RoundOutcomes.Add(roundOutcome);
+            await _context.SaveChangesAsync();
+
+            return Ok(roundOutcome);
+        }
+
         // DELETE: api/RoundOutcomes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoundOutcome([FromRoute] int id)

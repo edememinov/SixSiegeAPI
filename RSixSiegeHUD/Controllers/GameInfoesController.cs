@@ -97,6 +97,19 @@ namespace RSixSiegeHUD.Controllers
             return CreatedAtAction("GetGameInfo", new { id = gameInfo.GameInfoId }, gameInfo);
         }
 
+        public async Task<IActionResult> PersistGameInfo(GameInfo gameInfo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.GameInfos.Add(gameInfo);
+            await _context.SaveChangesAsync();
+
+            return Ok(gameInfo);
+        }
+
         // DELETE: api/GameInfoes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameInfo([FromRoute] int id)

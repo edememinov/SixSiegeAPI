@@ -97,6 +97,19 @@ namespace RSixSiegeHUD.Controllers
             return CreatedAtAction("GetMatch", new { id = match.MatchId }, match);
         }
 
+        public async Task<IActionResult> PersistMatch(Match match)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Matches.Add(match);
+            await _context.SaveChangesAsync();
+
+            return Ok(match);
+        }
+
         // DELETE: api/Matches/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMatch([FromRoute] int id)

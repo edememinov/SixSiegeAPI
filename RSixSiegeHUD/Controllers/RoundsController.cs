@@ -97,6 +97,19 @@ namespace RSixSiegeHUD.Controllers
             return CreatedAtAction("GetRound", new { id = round.RoundId }, round);
         }
 
+        public async Task<IActionResult> PersistRound(Round round)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Rounds.Add(round);
+            await _context.SaveChangesAsync();
+
+            return Ok(round);
+        }
+
         // DELETE: api/Rounds/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRound([FromRoute] int id)

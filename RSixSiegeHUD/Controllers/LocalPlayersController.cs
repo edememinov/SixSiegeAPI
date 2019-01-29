@@ -97,6 +97,19 @@ namespace RSixSiegeHUD.Controllers
             return CreatedAtAction("GetLocalPlayer", new { id = localPlayer.PlayerId }, localPlayer);
         }
 
+        public async Task<IActionResult> PersistLocalPlayer(LocalPlayer localPlayer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.LocalPlayers.Add(localPlayer);
+            await _context.SaveChangesAsync();
+
+            return Ok(localPlayer);
+        }
+
         // DELETE: api/LocalPlayers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLocalPlayer([FromRoute] int id)

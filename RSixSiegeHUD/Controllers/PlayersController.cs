@@ -97,6 +97,19 @@ namespace RSixSiegeHUD.Controllers
             return CreatedAtAction("GetPlayer", new { id = player.PlayerId }, player);
         }
 
+        public async Task<IActionResult> PersistPlayer(Player player)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Players.Add(player);
+            await _context.SaveChangesAsync();
+
+            return Ok(player);
+        }
+
         // DELETE: api/Players/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlayer([FromRoute] int id)

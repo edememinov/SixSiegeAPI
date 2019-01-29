@@ -1,0 +1,31 @@
+{
+    "game_info": {
+        "phase": "round_results"
+    },
+    "players": {
+        "roster_10": null,
+        "roster_11": null,
+        "roster_0": "{\"name\":\"AimEnough420\",\"team\":\"Orange\",\"is_local\":true}",
+        "roster_1": "{\"name\":\"CasiusF\",\"team\":\"Orange\",\"is_local\":false}",
+        "roster_2": "{\"name\":\"DOVEMEN-CARE\",\"team\":\"Blue\",\"is_local\":false}",
+        "roster_3": "{\"name\":\"EternalStroke\",\"team\":\"Blue\",\"is_local\":false}",
+        "roster_4": "{\"name\":\"GreenLupin\",\"team\":\"Orange\",\"is_local\":false}",
+        "roster_5": "{\"name\":\"GurkenTester\",\"team\":\"Orange\",\"is_local\":false}",
+        "roster_6": "{\"name\":\"IckyClone65\",\"team\":\"Blue\",\"is_local\":false}",
+        "roster_7": "{\"name\":\"Noob_KiNg_Alpha\",\"team\":\"Blue\",\"is_local\":false}",
+        "roster_8": "{\"name\":\"Snyarf\",\"team\":\"Orange\",\"is_local\":false}",
+        "roster_9": "{\"name\":\"neo1404\",\"team\":\"Blue\",\"is_local\":false}"
+    },
+    "player": {
+        "kills": "0",
+        "deaths": "0",
+        "health": "100",
+        "score": "0"
+    },
+    "round": {
+        "number": "2"
+    },
+    "match": {
+        "score": "{\"blue\":\"1\",\"orange\":\"0\"}"
+    }
+}

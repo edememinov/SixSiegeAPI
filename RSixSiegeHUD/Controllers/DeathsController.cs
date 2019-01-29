@@ -97,6 +97,19 @@ namespace RSixSiegeHUD.Controllers
             return CreatedAtAction("GetDeath", new { id = death.DeathId }, death);
         }
 
+        public async Task<IActionResult> PersistDeath(Death death)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Deaths.Add(death);
+            await _context.SaveChangesAsync();
+
+            return Ok(death);
+        }
+
         // DELETE: api/Deaths/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDeath([FromRoute] int id)

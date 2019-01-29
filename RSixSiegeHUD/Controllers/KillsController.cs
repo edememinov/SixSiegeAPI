@@ -97,6 +97,19 @@ namespace RSixSiegeHUD.Controllers
             return CreatedAtAction("GetKill", new { id = kill.KillId }, kill);
         }
 
+        public async Task<IActionResult> PersistKill(Kill kill)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Kills.Add(kill);
+            await _context.SaveChangesAsync();
+
+            return Ok(kill);
+        }
+
         // DELETE: api/Kills/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteKill([FromRoute] int id)
