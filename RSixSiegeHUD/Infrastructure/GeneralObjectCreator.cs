@@ -17,13 +17,25 @@ namespace RSixSiegeHUD.Infrastructure
             var matchToken = jsonObject.GetValue("matchToken");
 
             MatchProvider matchProvider = new MatchProvider();
+            RoundFactory roundFactory = new RoundFactory();
 
             var matches = matchProvider.GetMatches();
+            if (matches.Count() > 0)
+            {
+                var currentMatch = matches.Where(x => x.MatchToken == matchToken).FirstOrDefault();
 
-            var currentMatch = matches.Where(x => x.MatchToken == matchToken).FirstOrDefault();
+                if (currentMatch != null)
+                {
+                    roundFactory.CreateRound(jsonObject, currentMatch);
+                }
 
-            RoundFactory roundFactory = new RoundFactory();
-            roundFactory.CreateRound(jsonObject, currentMatch);
+            }
+            
+
+            
+
+            
+            
 
 
         }
