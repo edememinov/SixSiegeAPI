@@ -16,18 +16,22 @@ namespace RSixSiegeHUD.Infrastructure
             {
                 var roster = "roster" + x;
                 var jsonPlayer = jsonObject.GetValue(roster);
+                if(jsonPlayer != null)
+                {
+                    Player player = new Player()
+                    {
+                        IsLocal = jsonPlayer.GetValue("is_local"),
+                        Name = jsonPlayer.GetValue("name")
+                    };
+                    if (player.IsLocal == true)
+                    {
+                        player.UbisoftAccountToken = user.UbisoftId;
+                    }
 
-                Player player = new Player()
-                {
-                    IsLocal = jsonPlayer.GetValue("is_local"), Name = jsonPlayer.GetValue("name")
-                };
-                if(player.IsLocal == true)
-                {
-                    player.UbisoftAccountToken = user.UbisoftId;
+                    Persistor persistor = new Persistor();
+                    await persistor.PersistObject(player);
                 }
-
-                Persistor persistor = new Persistor();
-                await persistor.PersistObject(player);
+                
 
 
 
