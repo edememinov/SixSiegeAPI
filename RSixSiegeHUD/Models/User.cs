@@ -10,7 +10,8 @@ namespace RSixSiegeHUD.Models
     {
         [Key]
         public int UserId { get; set; }
-        public int UbisoftId { get; set; }
-        public int OverwolfId { get; set; }
+        public string UserName { get; set; }
+        public string UbisoftId { get; set; }
+
     }
 }

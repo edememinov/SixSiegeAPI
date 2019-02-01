@@ -11,7 +11,6 @@ namespace RSixSiegeHUD.Models
         public int KillId { get; set; }
         public int UserId { get; set; }
         public int RoundId { get; set; }
-        public string KillName { get; set; }
         public bool Headshot { get; set; }
     }
 }

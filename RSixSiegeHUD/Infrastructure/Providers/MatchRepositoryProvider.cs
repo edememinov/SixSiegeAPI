@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RSixSiegeHUD.Infrastructure
 {
-    public class MatchProvider
+    public class MatchRepositoryProvider
     {
         private readonly ApplicationDbContext _context;
 

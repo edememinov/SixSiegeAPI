@@ -1,0 +1,5 @@
+Defuse timer
+Ranked or casual match
+Place of death of local player
+Bomb/hostage/secure area location
+Who the local player killed

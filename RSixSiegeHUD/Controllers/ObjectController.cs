@@ -32,8 +32,6 @@ namespace RSixSiegeHUD.Controllers
         {
             GeneralObjectCreator generalObjectCreator = new GeneralObjectCreator();
             generalObjectCreator.SeperateObjects(jsonObject);
-
-
         }
 
         // PUT: api/Object/5

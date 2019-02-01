@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace RSixSiegeHUD.Infrastructure
 {
-    public class MatchFactory
+    public class MatchProvider
     {
-        public void CreateMatch(dynamic jsonObject)
+        public object GetMatch(dynamic jsonObject)
         {
             var matchJson = jsonObject.GetValue("match");
             var score = matchJson.GetValue("score");
             Match match = new Match()
             {
-                ScoreBlueTeam = score.GetValue("blue"), ScoreOrangeTeam = score.GetValue("orange")
+                ScoreBlueTeam = score.GetValue("blue"),
+                ScoreOrangeTeam = score.GetValue("orange")
             };
-
-            RoundFactory roundFactory = new RoundFactory();
-            roundFactory.CreateRound(jsonObject, match.ScoreBlueTeam, match.ScoreOrangeTeam, match.MatchId);
+            return match;
         }
     }
 }
