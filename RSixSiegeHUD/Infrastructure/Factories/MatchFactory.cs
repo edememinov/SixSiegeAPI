@@ -8,10 +8,10 @@ namespace RSixSiegeHUD.Infrastructure
 {
     public class MatchFactory
     {
-        public async void CreateMatchAsync(dynamic jsonObject)
+        public async void CreateMatchAsync(dynamic jsonObject, User user)
         {
             MatchProvider matchProvider = new MatchProvider();
-            var match = matchProvider.GetMatch(jsonObject);
+            var match = matchProvider.GetMatch(jsonObject, user);
             Persistor persistor = new Persistor();
             await persistor.PersistObject(match);
 

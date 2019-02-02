@@ -54,7 +54,7 @@ namespace RSixSiegeHUD.Infrastructure
                 else
                 {
                     
-                    matchFactory.CreateMatchAsync(jsonObject);
+                    matchFactory.CreateMatchAsync(jsonObject, user);
                     roundFactory.CreateRoundAsync(jsonObject, newMatch);
                 }
             }
