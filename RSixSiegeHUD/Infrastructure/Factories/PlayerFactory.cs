@@ -31,15 +31,7 @@ namespace RSixSiegeHUD.Infrastructure
                     Persistor persistor = new Persistor();
                     await persistor.PersistObject(player);
                 }
-                
-
-
-
             }
-
-
-
-           
         }
     }
 }
