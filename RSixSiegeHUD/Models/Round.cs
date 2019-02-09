@@ -12,7 +12,7 @@ namespace RSixSiegeHUD.Models
         public int RoundId { get; set; }
         public int MatchId { get; set; }
         public int RoundNumber { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public int BlueTeamScore { get; set; }
         public int OrangeTeamScore { get; set; }
     }

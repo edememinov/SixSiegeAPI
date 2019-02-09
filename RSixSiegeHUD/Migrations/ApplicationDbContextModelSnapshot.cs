@@ -113,9 +113,15 @@ namespace RSixSiegeHUD.Migrations
 
                     b.Property<bool>("IsLocal");
 
+                    b.Property<int>("MatchId");
+
                     b.Property<string>("Name");
 
+                    b.Property<int>("RoundId");
+
                     b.Property<string>("UbisoftAccountToken");
+
+                    b.Property<int?>("UserId");
 
                     b.HasKey("PlayerId");
 
@@ -138,7 +144,7 @@ namespace RSixSiegeHUD.Migrations
 
                     b.Property<int>("RoundNumber");
 
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("RoundId");
 
@@ -188,10 +194,6 @@ namespace RSixSiegeHUD.Migrations
                     b.Property<int>("Health");
 
                     b.Property<int>("Kills");
-
-                    b.Property<int>("MatchId");
-
-                    b.Property<int>("RoundId");
 
                     b.Property<int>("Score");
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RSixSiegeHUD.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,9 +91,10 @@ namespace RSixSiegeHUD.Migrations
                     Name = table.Column<string>(nullable: true),
                     IsLocal = table.Column<bool>(nullable: false),
                     UbisoftAccountToken = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true),
+                    MatchId = table.Column<int>(nullable: false),
+                    RoundId = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
-                    MatchId = table.Column<int>(nullable: true),
-                    RoundId = table.Column<int>(nullable: true),
                     Health = table.Column<int>(nullable: true),
                     Score = table.Column<int>(nullable: true),
                     Kills = table.Column<int>(nullable: true),
@@ -127,7 +128,7 @@ namespace RSixSiegeHUD.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     MatchId = table.Column<int>(nullable: false),
                     RoundNumber = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
                     BlueTeamScore = table.Column<int>(nullable: false),
                     OrangeTeamScore = table.Column<int>(nullable: false)
                 },
