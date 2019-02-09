@@ -12,11 +12,6 @@ namespace RSixSiegeHUD.Infrastructure
     {
         private readonly ApplicationDbContext _context;
 
-        public Persistor()
-        {
-
-        }
-
         public Persistor(ApplicationDbContext context)
         {
             _context = context;

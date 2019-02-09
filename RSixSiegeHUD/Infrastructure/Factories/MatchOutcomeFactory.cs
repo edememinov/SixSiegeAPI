@@ -1,4 +1,5 @@
-﻿using RSixSiegeHUD.Models;
+﻿using RSixSiegeHUD.Data;
+using RSixSiegeHUD.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace RSixSiegeHUD.Infrastructure
 {
     public class MatchOutcomeFactory
     {
-        public async void CreateKillAsync(dynamic jsonObject, Round round, User user)
+        public MatchOutcome CreateMatchOutcome(dynamic jsonObject, Round round, User user)
         {
             var killJson = jsonObject.GetValue("matchOutcome");
             var outcome = killJson.GetValue("data");
@@ -19,8 +20,7 @@ namespace RSixSiegeHUD.Infrastructure
                 MatchId = round.MatchId, Outcome = outcome, UserId = user.UserId
             };
 
-            Persistor persistor = new Persistor();
-            await persistor.PersistObject(matchOutcome);
+            return matchOutcome;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using RSixSiegeHUD.Models;
+﻿using RSixSiegeHUD.Data;
+using RSixSiegeHUD.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,12 @@ namespace RSixSiegeHUD.Infrastructure
 {
     public class RoundFactory
     {
-        public async void CreateRoundAsync(dynamic jsonObject, Match match)
+        public Round CreateRound(dynamic jsonObject, Match match)
         {
             RoundProvider roundProvider = new RoundProvider();
             var round = roundProvider.GetRound(jsonObject, match);
-            Persistor persistor = new Persistor();
-            await persistor.PersistObject(round);
+
+            return round;
         }
 
     }

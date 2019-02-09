@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RSixSiegeHUD.Data;
 using RSixSiegeHUD.Infrastructure;
+using RSixSiegeHUD.ViewModel;
 
 namespace RSixSiegeHUD.Controllers
 {
@@ -12,6 +14,14 @@ namespace RSixSiegeHUD.Controllers
     [ApiController]
     public class ObjectController : ControllerBase
     {
+
+        private readonly ApplicationDbContext _context;
+
+        public ObjectController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         // GET: api/Object
         [HttpGet]
         public IEnumerable<string> Get()
@@ -27,11 +37,24 @@ namespace RSixSiegeHUD.Controllers
         }
 
         // POST: api/Object
-        [HttpPost]
+        [HttpPost(Name = "Match")]
         public void Post([FromBody] dynamic jsonObject)
         {
             GeneralObjectCreator generalObjectCreator = new GeneralObjectCreator();
-            generalObjectCreator.SeperateObjects(jsonObject);
+            SiegeViewModel viewmodel = generalObjectCreator.SeperateObjects(jsonObject);
+
+            if (_context.Matches.Where(x => x.MatchToken.Equals(viewmodel.CurrentMatch.MatchToken)).FirstOrDefault() != null)
+            {
+                _context.Add(viewmodel.CurrentRound);
+            }
+            else
+            {
+                _context.Add(viewmodel.CurrentMatch);
+                _context.Add(viewmodel.CurrentRound);
+
+                _context.SaveChanges();
+
+            }
         }
 
         // PUT: api/Object/5

@@ -1,4 +1,5 @@
-﻿using RSixSiegeHUD.Models;
+﻿using RSixSiegeHUD.Data;
+using RSixSiegeHUD.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,10 @@ namespace RSixSiegeHUD.Infrastructure
 {
     public class PlayerFactory
     {
-        public async void CreateLocalPlayerAsync(dynamic jsonObject, Round round, User user)
+        public List<Player> CreatePlayers(dynamic jsonObject, Round round, User user)
         {
             var playersJson = jsonObject.GetValue("players");
+            List<Player> players = new List<Player>();
             
             for(var x = 0; x < 10; x++)
             {
@@ -28,10 +30,11 @@ namespace RSixSiegeHUD.Infrastructure
                         player.UbisoftAccountToken = user.UbisoftId;
                     }
 
-                    Persistor persistor = new Persistor();
-                    await persistor.PersistObject(player);
+                    players.Add(player);
+                    
                 }
             }
+            return players;
         }
     }
 }

@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\Providers\MatchRepositoryProvider.cs" />
+    <Compile Remove="Infrastructure\Providers\UserRepositoryProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

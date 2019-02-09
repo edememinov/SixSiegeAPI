@@ -1,9 +1,11 @@
-﻿using RSixSiegeHUD.Models;
+﻿using Newtonsoft.Json.Linq;
+using RSixSiegeHUD.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RSixSiegeHUD.Infrastructure
@@ -12,12 +14,24 @@ namespace RSixSiegeHUD.Infrastructure
     {
         public object GetMatch(dynamic jsonObject, User user)
         {
-            var matchJson = jsonObject.GetValue("match");
-            var score = matchJson.GetValue("score");
-            Match match = new Match()
+            dynamic matchJson = jsonObject.GetValue("match");
+            dynamic score = matchJson.GetValue("score");
+
+            var stringscore = score.ToString();
+
+            var cleanStringScore = Regex.Replace(stringscore, @"\r\n?|\n", "");
+
+            var scoreJsonClean = JObject.Parse(cleanStringScore);
+
+
+
+            var blue = scoreJsonClean.GetValue("blue");
+            var orange = scoreJsonClean.GetValue("orange");
+
+            Models.Match match = new Models.Match()
             {
-                ScoreBlueTeam = score.GetValue("blue"),
-                ScoreOrangeTeam = score.GetValue("orange")
+                ScoreBlueTeam = blue,
+                ScoreOrangeTeam = orange
             };
 
            

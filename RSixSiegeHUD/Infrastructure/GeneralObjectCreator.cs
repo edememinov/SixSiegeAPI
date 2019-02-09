@@ -1,4 +1,8 @@
-﻿using RSixSiegeHUD.Models;
+﻿using RSixSiegeHUD.Data;
+using RSixSiegeHUD.Infrastructure.Factories;
+using RSixSiegeHUD.Infrastructure.Providers;
+using RSixSiegeHUD.Models;
+using RSixSiegeHUD.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +12,7 @@ namespace RSixSiegeHUD.Infrastructure
 {
     public class GeneralObjectCreator
     {
-        public void SeperateObjects(dynamic jsonObject)
+        public SiegeViewModel SeperateObjects(dynamic jsonObject)
         {
             //set all the json objects from Overwolf API into objects
             var gameInfo = jsonObject.GetValue("game_info");
@@ -17,10 +21,9 @@ namespace RSixSiegeHUD.Infrastructure
             var round = jsonObject.GetValue("round");
             var match = jsonObject.GetValue("match");
             var matchToken = jsonObject.GetValue("matchToken");
-            // Define all providers
-            MatchRepositoryProvider matchRepositoryProvider = new MatchRepositoryProvider();
-            MatchProvider matchProvider = new MatchProvider();
-            RoundProvider roundProvider = new RoundProvider();
+
+            //Define ViewModel
+            SiegeViewModel viewModel = new SiegeViewModel();
 
 
             //Define all factories
@@ -32,32 +35,39 @@ namespace RSixSiegeHUD.Infrastructure
             MatchOutcomeFactory matchOutcomeFactory = new MatchOutcomeFactory();
             PlayerFactory playerFactory = new PlayerFactory();
             RoundOutcomeFactory roundOutcomeFactory = new RoundOutcomeFactory();
+            UserFactory userFactory = new UserFactory();
 
-            User user = new User();
+            //get user
+            viewModel.CurrentUser = userFactory.CreateUser(jsonObject);
 
             //get match
-            var newMatch = matchProvider.GetMatch(jsonObject, user);
+            viewModel.CurrentMatch = matchFactory.CreateMatch(jsonObject, viewModel.CurrentUser);
 
             //get round
-            var newRound = roundProvider.GetRound(jsonObject, newMatch);
+            viewModel.CurrentRound = roundFactory.CreateRound(jsonObject, viewModel.CurrentMatch);
+
+            //get match outcome
+            //viewModel.CurrentMatchOutcome = matchOutcomeFactory.CreateMatchOutcome(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+
+            //get local player
+            viewModel.CurrentLocalPlayer = localPlayerFactory.CreateLocalPlayer(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+            
+            //get all players
+            viewModel.CurrentPlayers = playerFactory.CreatePlayers(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+
+            //get round outcome
+            //viewModel.CurrentRoundOutcome = roundOutcomeFactory.CreateRoundOutcome(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+
+            //get death
+            //viewModel.PlayerDeath = deathFactory.CreateDeath(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+
+            //get kill
+            //viewModel.PlayerKill = killFactory.CreateKill(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+
+            return viewModel;
 
 
-            var matches = matchRepositoryProvider.GetMatches();
-            if (matches.Count() > 0)
-            {
-                var currentMatch = matches.Where(x => x.MatchToken == matchToken).FirstOrDefault();
 
-                if (currentMatch != null)
-                {
-                    roundFactory.CreateRoundAsync(jsonObject, currentMatch);
-                }
-                else
-                {
-                    
-                    matchFactory.CreateMatchAsync(jsonObject, user);
-                    roundFactory.CreateRoundAsync(jsonObject, newMatch);
-                }
-            }
 
         }
     }

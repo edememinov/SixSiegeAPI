@@ -18,6 +18,8 @@ namespace RSixSiegeHUD.Data
         public DbSet<MatchOutcome> MatchOutcomes { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Round> Rounds { get; set; }
+        public DbSet<User> Users { get; set; }
+
         public DbSet<RoundOutcome> RoundOutcomes { get; set; }
 
 
