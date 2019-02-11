@@ -17,6 +17,23 @@ namespace RSixSiegeHUD.Infrastructure
             var health = killJson.GetValue("health");
             var score = killJson.GetValue("score");
 
+            if(kills == null)
+            {
+                kills = 0;
+            }
+            if(deaths == null)
+            {
+                deaths = 0;
+            }
+            if(score == null)
+            {
+                score = 0;
+            }
+            if(health == null)
+            {
+                health = 0;
+            }
+
 
 
             LocalPlayer player = new LocalPlayer()

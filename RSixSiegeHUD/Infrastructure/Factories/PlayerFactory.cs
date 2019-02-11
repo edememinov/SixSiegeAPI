@@ -25,35 +25,39 @@ namespace RSixSiegeHUD.Infrastructure
             {
                 var roster = "roster_" + x;
                 var jsonPlayer = scoreJsonClean.GetValue(roster);
-                var stringjsonPlayer = jsonPlayer.ToString();
-                var cleanStringPlayer = Regex.Replace(stringjsonPlayer, @"\r\n?|\n", "");
-                var playerJsonClean = JObject.Parse(cleanStringPlayer);
-
                 if (jsonPlayer != null)
                 {
-                    var stringBool = playerJsonClean.GetValue("is_local");
-                    
-                    Player player = new Player()
-                    {
-                        Name = playerJsonClean.GetValue("name")
-                    };
-                    if (stringBool.ToString().ToLower().Equals("true"))
-                    {
-                        player.IsLocal = true;
-                    }
-                    else
-                    {
-                        player.IsLocal = false;
-                    }
+                    var stringjsonPlayer = jsonPlayer.ToString();
+                    var cleanStringPlayer = Regex.Replace(stringjsonPlayer, @"\r\n?|\n", "");
+                    var playerJsonClean = JObject.Parse(cleanStringPlayer);
 
-                    if (player.IsLocal == true)
+                    if (jsonPlayer != null)
                     {
-                        player.UbisoftAccountToken = user.UbisoftId;
-                    }
+                        var stringBool = playerJsonClean.GetValue("is_local");
 
-                    players.Add(player);
-                    
+                        Player player = new Player()
+                        {
+                            Name = playerJsonClean.GetValue("name")
+                        };
+                        if (stringBool.ToString().ToLower().Equals("true"))
+                        {
+                            player.IsLocal = true;
+                        }
+                        else
+                        {
+                            player.IsLocal = false;
+                        }
+
+                        if (player.IsLocal == true)
+                        {
+                            player.UbisoftAccountToken = user.UbisoftId;
+                        }
+
+                        players.Add(player);
+
+                    }
                 }
+               
             }
             return players;
         }

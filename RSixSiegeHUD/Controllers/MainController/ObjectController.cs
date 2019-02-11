@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RSixSiegeHUD.Data;
@@ -39,6 +40,7 @@ namespace RSixSiegeHUD.Controllers
 
         // POST: api/Object
         [HttpPost(Name = "Match")]
+        //[EnableCors("AllowAnyOrigin")]
         public OkResult Post([FromBody] dynamic jsonObject)
         {
             GeneralObjectCreator generalObjectCreator = new GeneralObjectCreator();

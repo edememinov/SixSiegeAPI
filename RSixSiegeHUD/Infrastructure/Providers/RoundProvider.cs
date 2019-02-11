@@ -9,6 +9,11 @@ namespace RSixSiegeHUD.Infrastructure
             var roundJson = jsonObject.GetValue("round");
             var number = roundJson.GetValue("number");
 
+            if (number == null)
+            {
+                number = 0;
+            }
+
             Round round = new Round()
             {
                 MatchId = match.MatchId,

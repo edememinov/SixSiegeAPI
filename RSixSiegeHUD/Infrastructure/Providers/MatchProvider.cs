@@ -35,9 +35,9 @@ namespace RSixSiegeHUD.Infrastructure
             };
 
            
-            Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            
+
             byte[] name = Encoding.ASCII.GetBytes(user.UserName);
-            byte[] timestamp = Encoding.ASCII.GetBytes(unixTimestamp.ToString());
             var combinedBytes = name.Concat(timestamp).ToString();
 
             var sha256 = new SHA256Managed();
