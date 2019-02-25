@@ -11,16 +11,22 @@ namespace RSixSiegeHUD.Infrastructure
     {
         public MatchOutcome CreateMatchOutcome(dynamic jsonObject, Round round, User user)
         {
-            var killJson = jsonObject.GetValue("matchOutcome");
-            var outcome = killJson.GetValue("data");
+            var matchOutcome = jsonObject.GetValue("events");
+            
 
-
-            MatchOutcome matchOutcome = new MatchOutcome()
+            if(matchOutcome == null)
             {
-                MatchId = round.MatchId, Outcome = outcome, UserId = user.UserId
+                return null;  
+            }
+            var outcome = matchOutcome[0].GetValue("data");
+
+            return new MatchOutcome()
+            {
+                MatchId = round.MatchId,
+                Outcome = outcome,
+                UserId = user.UserId
             };
 
-            return matchOutcome;
         }
     }
 }

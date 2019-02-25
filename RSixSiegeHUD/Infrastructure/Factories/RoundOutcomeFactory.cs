@@ -11,18 +11,24 @@ namespace RSixSiegeHUD.Infrastructure
     {
         public RoundOutcome CreateRoundOutcome(dynamic jsonObject, Round round, User user)
         {
-            var killJson = jsonObject.GetValue("roundOutcome");
-            var outcome = killJson.GetValue("data");
+            var killJson = jsonObject.GetValue("events");
+          
 
+            if(killJson == null)
+            {
+                return null;
+            }
 
-            RoundOutcome roundOutcome = new RoundOutcome()
+            var outcome = killJson[0].GetValue("data");
+
+            return new RoundOutcome()
             {
                 UserId = user.UserId,
                 RoundId = round.RoundId,
                 Outcome = outcome
             };
+             
 
-            return roundOutcome;
         }
     }
 }

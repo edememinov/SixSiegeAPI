@@ -12,6 +12,11 @@ namespace RSixSiegeHUD.Infrastructure
         public LocalPlayer CreateLocalPlayer(dynamic jsonObject, Round round, User user)
         {
             var killJson = jsonObject.GetValue("player");
+            if (killJson == null)
+            {
+                return null;
+            }
+
             var kills = killJson.GetValue("kills");
             var deaths = killJson.GetValue("deaths");
             var health = killJson.GetValue("health");
@@ -35,13 +40,18 @@ namespace RSixSiegeHUD.Infrastructure
             }
 
 
-
-            LocalPlayer player = new LocalPlayer()
+            return new LocalPlayer()
             {
-                Deaths = deaths, Kills = kills, Health = health, IsLocal = true, Name = user.UserName, RoundId = round.RoundId, Score = score, UbisoftAccountToken = user.UbisoftId
-            };
+                Deaths = deaths,
+                    Kills = kills,
+                    Health = health,
+                    IsLocal = true,
+                    Name = user.UserName,
+                    RoundId = round.RoundId,
+                    Score = score,
+                    UbisoftAccountToken = user.UbisoftId
+                };
 
-            return player;
         }
     }
 }

@@ -11,10 +11,17 @@ namespace RSixSiegeHUD.Infrastructure
     {
         public Round CreateRound(dynamic jsonObject, Match match)
         {
+            if (jsonObject.GetValue("round") == null)
+            {
+
+                return null;
+            }
+
             RoundProvider roundProvider = new RoundProvider();
             var round = roundProvider.GetRound(jsonObject, match);
 
             return round;
+
         }
 
     }

@@ -11,14 +11,23 @@ namespace RSixSiegeHUD.Infrastructure.Factories
     {
         public User CreateUser(dynamic jsonObject)
         {
-            var userUbisoft = jsonObject.GetValue("userUbisoft");
-
-            User user = new User()
+            if (jsonObject == null)
             {
-                OverWolfId = jsonObject.GetValue("userId"), UbisoftId = userUbisoft, UserName = jsonObject.GetValue("username")
+                return null;
+            }
+            var userUbisoft = jsonObject.GetValue("userUbisoft");
+            if (userUbisoft == null)
+            {
+                return null;
+            }
+
+            return new User()
+            {
+                OverWolfId = jsonObject.GetValue("userId"),
+                UbisoftId = userUbisoft,
+                UserName = jsonObject.GetValue("username")
             };
 
-            return user;
         }
     }
 }

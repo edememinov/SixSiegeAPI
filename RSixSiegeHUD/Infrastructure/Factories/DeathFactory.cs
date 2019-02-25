@@ -11,16 +11,26 @@ namespace RSixSiegeHUD.Infrastructure
     {
         public Death CreateDeath(dynamic jsonObject, Round round, User user)
         {
-            var deathJson = jsonObject.GetValue("death");
-            var killer = deathJson.GetValue("killer");
-            var name = killer.GetValue("data");
-
-            Death death = new Death()
+            if (jsonObject == null)
             {
-               KilledBy = name, RoundId = round.RoundId, UserId = user.UbisoftId
-            };
+                return null;
+            }
 
-            return death;
+            var deathJson = jsonObject.GetValue("events");
+
+            if (deathJson == null)
+            {
+                return null;
+            }
+            var killer = deathJson[0].GetValue("name");
+            var name = deathJson[0].GetValue("data");
+
+            return new Death()
+            {
+                KilledBy = name,
+                RoundId = round.RoundId,
+                UserId = user.UserId
+            };
             
         }
     }

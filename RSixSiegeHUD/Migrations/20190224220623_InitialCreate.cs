@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RSixSiegeHUD.Migrations
 {
-    public partial class Initialcreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +13,7 @@ namespace RSixSiegeHUD.Migrations
                 {
                     DeathId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
                     RoundId = table.Column<int>(nullable: false),
                     KilledBy = table.Column<string>(nullable: true)
                 },
@@ -60,7 +59,7 @@ namespace RSixSiegeHUD.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ScoreBlueTeam = table.Column<int>(nullable: false),
                     ScoreOrangeTeam = table.Column<int>(nullable: false),
-                    MatchToken = table.Column<byte[]>(nullable: true)
+                    MatchToken = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

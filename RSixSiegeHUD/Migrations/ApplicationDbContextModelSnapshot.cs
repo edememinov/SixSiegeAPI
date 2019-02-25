@@ -29,7 +29,7 @@ namespace RSixSiegeHUD.Migrations
 
                     b.Property<int>("RoundId");
 
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("DeathId");
 
@@ -74,7 +74,7 @@ namespace RSixSiegeHUD.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<byte[]>("MatchToken");
+                    b.Property<string>("MatchToken");
 
                     b.Property<int>("ScoreBlueTeam");
 

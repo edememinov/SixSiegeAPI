@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RSixSiegeHUD.Data;
 using RSixSiegeHUD.Infrastructure;
 using RSixSiegeHUD.Models;
@@ -26,9 +27,9 @@ namespace RSixSiegeHUD.Controllers
 
         // GET: api/Object
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Match> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _context.Matches;
         }
 
         // GET: api/Object/5
@@ -40,22 +41,50 @@ namespace RSixSiegeHUD.Controllers
 
         // POST: api/Object
         [HttpPost(Name = "Match")]
-        //[EnableCors("AllowAnyOrigin")]
-        public OkResult Post([FromBody] dynamic jsonObject)
+        public void Post([FromBody] dynamic jsonObject)
         {
             GeneralObjectCreator generalObjectCreator = new GeneralObjectCreator();
             SiegeViewModel viewmodel = generalObjectCreator.SeperateObjects(jsonObject);
 
-            if (_context.Users.Where(x => x.OverWolfId.Equals(viewmodel.CurrentUser.OverWolfId)).FirstOrDefault() == null)
+            if(viewmodel.CurrentMatch == null)
             {
-                _context.Add(viewmodel.CurrentUser);
-                _context.SaveChanges();
+                throw new Exception("No match");
             }
 
-            if (_context.Matches.Where(x => x.MatchToken == viewmodel.CurrentMatch.MatchToken).FirstOrDefault() == null)
+            if (_context.Users.Where(x => x.OverWolfId.Equals(viewmodel.CurrentUser.OverWolfId)).FirstOrDefault() == null)
             {
-                _context.Add(viewmodel.CurrentMatch);
-                _context.SaveChanges();
+                if(viewmodel.CurrentUser != null)
+                {
+                    _context.Add(viewmodel.CurrentUser);
+                    _context.SaveChanges();
+                }
+                
+            }
+
+            if (_context.Matches.Where(x => x.MatchToken.Equals(viewmodel.CurrentMatch.MatchToken)).FirstOrDefault() == null)
+            {
+                if(viewmodel.CurrentMatch != null)
+                {
+                    if (!viewmodel.CurrentMatch.MatchToken.Equals(""))
+                    {
+                        _context.Add(viewmodel.CurrentMatch);
+                        _context.SaveChanges();
+                    }
+                    
+                }
+                
+            }
+            else
+            {
+                var thisMatch = _context.Matches.Where(x => x.MatchToken.Equals(viewmodel.CurrentMatch.MatchToken)).FirstOrDefault();
+                if (thisMatch.ScoreBlueTeam < viewmodel.CurrentMatch.ScoreBlueTeam || thisMatch.ScoreOrangeTeam < viewmodel.CurrentMatch.ScoreOrangeTeam)
+                {
+                    thisMatch.ScoreBlueTeam = viewmodel.CurrentMatch.ScoreBlueTeam;
+                    thisMatch.ScoreOrangeTeam = viewmodel.CurrentMatch.ScoreOrangeTeam;
+                    _context.Entry(thisMatch).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
+                
             }
 
             var currentUser = _context.Users.Where(x => x.OverWolfId.Equals(viewmodel.CurrentUser.OverWolfId)).FirstOrDefault();
@@ -64,54 +93,93 @@ namespace RSixSiegeHUD.Controllers
 
             if(_context.Rounds.Where(x => x.MatchId == matchId && x.RoundNumber == viewmodel.CurrentRound.RoundNumber).FirstOrDefault() == null)
             {
-                viewmodel.CurrentRound.MatchId = matchId;
-                viewmodel.CurrentRound.UserId = currentUser.UserId;
-                _context.Add(viewmodel.CurrentRound);
-                _context.SaveChanges();
+                if(viewmodel.CurrentRound != null)
+                {
+                    viewmodel.CurrentRound.MatchId = matchId;
+                    viewmodel.CurrentRound.UserId = currentUser.UserId;
+                    _context.Add(viewmodel.CurrentRound);
+                    _context.SaveChanges();
+                }
+                
             }
             
             var roundId = _context.Rounds.Where(x => x.MatchId == matchId && x.RoundNumber == viewmodel.CurrentRound.RoundNumber).FirstOrDefault().RoundId;
-            foreach (var player in viewmodel.CurrentPlayers)
+            if(viewmodel.CurrentPlayers != null)
             {
-                if (player.IsLocal)
+                foreach (var player in viewmodel.CurrentPlayers)
                 {
-                    player.UserId = currentUser.UserId;
-                    LocalPlayer localPlayer = new LocalPlayer()
+                    if (player.IsLocal)
                     {
-                        Deaths = viewmodel.CurrentLocalPlayer.Deaths,
-                        Health = viewmodel.CurrentLocalPlayer.Health,
-                        Kills = viewmodel.CurrentLocalPlayer.Kills,
-                        RoundId = roundId,
-                        IsLocal = true,
-                        Name = player.Name,
-                        MatchId = matchId,
-                        Score = viewmodel.CurrentLocalPlayer.Score,
-                        UserId = currentUser.UserId,
-                        UbisoftAccountToken = viewmodel.CurrentUser.UbisoftId
-                    };
-                    if(_context.Players.Where(x => x.MatchId == matchId && x.RoundId == roundId && x.Name.Equals(localPlayer.Name)).FirstOrDefault() == null)
-                    {
-                        _context.Add(localPlayer);
-                    }
-                    
-                }
-                else
-                {
-                    player.MatchId = matchId;
-                    player.RoundId = roundId;
+                        player.UserId = currentUser.UserId;
+                        LocalPlayer localPlayer = new LocalPlayer()
+                        {
+                            Deaths = viewmodel.CurrentLocalPlayer.Deaths,
+                            Health = viewmodel.CurrentLocalPlayer.Health,
+                            Kills = viewmodel.CurrentLocalPlayer.Kills,
+                            RoundId = roundId,
+                            IsLocal = true,
+                            Name = player.Name,
+                            MatchId = matchId,
+                            Score = viewmodel.CurrentLocalPlayer.Score,
+                            UserId = currentUser.UserId,
+                            UbisoftAccountToken = viewmodel.CurrentUser.UbisoftId
+                        };
+                        if (_context.Players.Where(x => x.MatchId == matchId && x.RoundId == roundId && x.Name.Equals(localPlayer.Name)).FirstOrDefault() == null)
+                        {
+                            _context.Add(localPlayer);
+                        }
 
-                    if (_context.Players.Where(x => x.MatchId == matchId && x.RoundId == roundId && x.Name.Equals(player.Name)).FirstOrDefault() == null)
-                    {
-                        _context.Add(player);
                     }
-                }
-                _context.SaveChanges();
+                    else
+                    {
+                        player.MatchId = matchId;
+                        player.RoundId = roundId;
 
+                        if (_context.Players.Where(x => x.MatchId == matchId && x.RoundId == roundId && x.Name.Equals(player.Name)).FirstOrDefault() == null)
+                        {
+                            _context.Add(player);
+                        }
+                    }
+                    _context.SaveChanges();
+
+                }
             }
+
+            if(viewmodel.CurrentRoundOutcome != null)
+            {
+                viewmodel.CurrentRoundOutcome.RoundId = roundId;
+                viewmodel.CurrentRoundOutcome.UserId = currentUser.UserId;
+                _context.Add(viewmodel.CurrentRoundOutcome);
+                _context.SaveChanges();
+            }
+
+            if (viewmodel.CurrentMatchOutcome != null)
+            {
+                viewmodel.CurrentMatchOutcome.MatchId = matchId;
+                viewmodel.CurrentMatchOutcome.UserId = currentUser.UserId;
+                _context.Add(viewmodel.CurrentMatchOutcome);
+                _context.SaveChanges();
+            }
+
+            if(viewmodel.PlayerDeath != null)
+            {
+                viewmodel.PlayerDeath.RoundId = roundId;
+                viewmodel.PlayerDeath.UserId = currentUser.UserId;
+                _context.Add(viewmodel.PlayerDeath);
+                _context.SaveChanges();
+            }
+
+            if (viewmodel.PlayerKill != null)
+            {
+                viewmodel.PlayerKill.RoundId = roundId;
+                viewmodel.PlayerKill.UserId = currentUser.UserId;
+                _context.Add(viewmodel.PlayerKill);
+                _context.SaveChanges();
+            }
+
 
             _context.SaveChanges();
 
-            return Ok();
         }
 
         // PUT: api/Object/5

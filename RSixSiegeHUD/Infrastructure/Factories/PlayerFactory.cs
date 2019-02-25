@@ -13,7 +13,12 @@ namespace RSixSiegeHUD.Infrastructure
     {
         public List<Player> CreatePlayers(dynamic jsonObject, Round round, User user)
         {
+            
             var playersJson = jsonObject.GetValue("players");
+            if (playersJson == null)
+            {
+                return null;
+            }
             var stringscore = playersJson.ToString();
             var cleanStringScore = Regex.Replace(stringscore, @"\r\n?|\n", "");
 

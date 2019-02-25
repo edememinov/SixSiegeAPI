@@ -17,6 +17,15 @@ namespace RSixSiegeHUD.Infrastructure
             dynamic matchJson = jsonObject.GetValue("match");
             dynamic score = matchJson.GetValue("score");
 
+            dynamic token = jsonObject.GetValue("info");
+            
+           
+            if(token == null)
+            {
+                return null;
+            }
+
+            token = token.ToString();
             var stringscore = score.ToString();
 
             var cleanStringScore = Regex.Replace(stringscore, @"\r\n?|\n", "");
@@ -31,22 +40,14 @@ namespace RSixSiegeHUD.Infrastructure
             Models.Match match = new Models.Match()
             {
                 ScoreBlueTeam = blue,
-                ScoreOrangeTeam = orange
+                ScoreOrangeTeam = orange,
+                MatchToken  = token
             };
-
-           
-            
-
-            byte[] name = Encoding.ASCII.GetBytes(user.UserName);
-            var combinedBytes = name.Concat(timestamp).ToString();
-
-            var sha256 = new SHA256Managed();
-            var bytes = UTF8Encoding.UTF8.GetBytes(combinedBytes);
-            var hash = sha256.ComputeHash(bytes);
-
-            match.MatchToken = hash;          
+   
 
             return match;
         }
+
+   
     }
 }

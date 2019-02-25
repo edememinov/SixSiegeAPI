@@ -10,7 +10,7 @@ namespace RSixSiegeHUD.Models
         [Key]
         public int DeathId { get; set; }
         
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public int RoundId { get; set; }
         public string KilledBy { get; set; }
     }

@@ -7,22 +7,27 @@ namespace RSixSiegeHUD.Infrastructure
         public Round GetRound(dynamic jsonObject, Match match)
         {
             var roundJson = jsonObject.GetValue("round");
+
+            if(roundJson == null)
+            {
+                return null;
+            }
+
             var number = roundJson.GetValue("number");
+
 
             if (number == null)
             {
                 number = 0;
             }
 
-            Round round = new Round()
+            return new Round()
             {
                 MatchId = match.MatchId,
                 BlueTeamScore = match.ScoreBlueTeam,
                 OrangeTeamScore = match.ScoreOrangeTeam,
                 RoundNumber = number
-            };
-
-            return round;
+            }; ;
         }
     }
 }

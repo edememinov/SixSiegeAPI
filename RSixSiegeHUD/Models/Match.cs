@@ -11,7 +11,7 @@ namespace RSixSiegeHUD.Models
         public int MatchId { get; set; }
         public int ScoreBlueTeam { get; set; }
         public int ScoreOrangeTeam { get; set; }
-        public byte[] MatchToken { get; set; }
+        public string MatchToken { get; set; }
 
     }
 }

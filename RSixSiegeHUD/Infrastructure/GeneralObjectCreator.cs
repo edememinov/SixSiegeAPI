@@ -1,12 +1,6 @@
-﻿using RSixSiegeHUD.Data;
-using RSixSiegeHUD.Infrastructure.Factories;
-using RSixSiegeHUD.Infrastructure.Providers;
-using RSixSiegeHUD.Models;
+﻿using RSixSiegeHUD.Infrastructure.Factories;
 using RSixSiegeHUD.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace RSixSiegeHUD.Infrastructure
 {
@@ -15,12 +9,11 @@ namespace RSixSiegeHUD.Infrastructure
         public SiegeViewModel SeperateObjects(dynamic jsonObject)
         {
             //set all the json objects from Overwolf API into objects
-            var gameInfo = jsonObject.GetValue("game_info");
-            var players = jsonObject.GetValue("players");
-            var player = jsonObject.GetValue("player");
-            var round = jsonObject.GetValue("round");
-            var match = jsonObject.GetValue("match");
-            var matchToken = jsonObject.GetValue("matchToken");
+            if (jsonObject == null)
+            {
+                return null;
+            }
+
 
             //Define ViewModel
             SiegeViewModel viewModel = new SiegeViewModel();
@@ -37,6 +30,9 @@ namespace RSixSiegeHUD.Infrastructure
             RoundOutcomeFactory roundOutcomeFactory = new RoundOutcomeFactory();
             UserFactory userFactory = new UserFactory();
 
+            dynamic events = jsonObject.GetValue("events");
+            dynamic eventsName = events[0].GetValue("name");
+
             //get user
             viewModel.CurrentUser = userFactory.CreateUser(jsonObject);
 
@@ -47,7 +43,10 @@ namespace RSixSiegeHUD.Infrastructure
             viewModel.CurrentRound = roundFactory.CreateRound(jsonObject, viewModel.CurrentMatch);
 
             //get match outcome
-            //viewModel.CurrentMatchOutcome = matchOutcomeFactory.CreateMatchOutcome(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+            if (eventsName.ToString().Equals("matchOutcome")){
+                viewModel.CurrentMatchOutcome = matchOutcomeFactory.CreateMatchOutcome(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+            }
+            
 
             //get local player
             viewModel.CurrentLocalPlayer = localPlayerFactory.CreateLocalPlayer(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
@@ -56,13 +55,23 @@ namespace RSixSiegeHUD.Infrastructure
             viewModel.CurrentPlayers = playerFactory.CreatePlayers(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
 
             //get round outcome
-            //viewModel.CurrentRoundOutcome = roundOutcomeFactory.CreateRoundOutcome(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+            if (eventsName.ToString().Equals("roundOutcome")){
+                viewModel.CurrentRoundOutcome = roundOutcomeFactory.CreateRoundOutcome(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+            }
+            
 
             //get death
-            //viewModel.PlayerDeath = deathFactory.CreateDeath(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+            if (eventsName.ToString().Equals("killer")){
+                viewModel.PlayerDeath = deathFactory.CreateDeath(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+            }
+            
 
             //get kill
-            //viewModel.PlayerKill = killFactory.CreateKill(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+            if (eventsName.ToString().Equals("kill") || eventsName.ToString().Equals("headshot"))
+            {
+                viewModel.PlayerKill = killFactory.CreateKill(jsonObject, viewModel.CurrentRound, viewModel.CurrentUser);
+            }
+            
 
             return viewModel;
 
