@@ -33,6 +33,7 @@ namespace RSixSiegeHUD.API
             services.AddDbContext<ApplicationDbContext>
                 (options => options.UseSqlServer(connection));
             services.AddCors();
+            services.AddControllers();
 
         }
 
@@ -43,8 +44,14 @@ namespace RSixSiegeHUD.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+            });
+
             app.UseCors(
-                options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowedToAllowWildcardSubdomains().AllowCredentials()
+                options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowedToAllowWildcardSubdomains()
             );
         }
     }

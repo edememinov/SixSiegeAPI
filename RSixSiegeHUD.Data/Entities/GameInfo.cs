@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RSixSiegeHUD.Data.Entities
 {
-    public class GameInfo
+    public class GameInfo : TimeStampObject
     {
         [Key]
         public int GameInfoId { get; set; }

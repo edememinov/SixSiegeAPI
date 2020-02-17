@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RSixSiegeHUD.Data.Entities
 {
-    public class RoundOutcome
+    public class RoundOutcome : TimeStampObject
     {
         [Key]
         public int RoundOutcomeId { get; set; }

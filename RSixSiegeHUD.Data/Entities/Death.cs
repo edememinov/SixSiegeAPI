@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RSixSiegeHUD.Data.Entities
 {
-    public class Death
+    public class Death : TimeStampObject
     {
         [Key]
         public int DeathId { get; set; }
@@ -13,5 +10,6 @@ namespace RSixSiegeHUD.Data.Entities
         public int UserId { get; set; }
         public int RoundId { get; set; }
         public string KilledBy { get; set; }
+      
     }
 }

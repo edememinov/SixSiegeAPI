@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RSixSiegeHUD.Migrations
+namespace RSixSiegeHUD.Data.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -12,7 +12,8 @@ namespace RSixSiegeHUD.Migrations
                 columns: table => new
                 {
                     DeathId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     RoundId = table.Column<int>(nullable: false),
                     KilledBy = table.Column<string>(nullable: true)
@@ -27,7 +28,8 @@ namespace RSixSiegeHUD.Migrations
                 columns: table => new
                 {
                     GameInfoId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     Phase = table.Column<string>(nullable: true),
                     MatchId = table.Column<string>(nullable: true)
                 },
@@ -41,7 +43,8 @@ namespace RSixSiegeHUD.Migrations
                 columns: table => new
                 {
                     KillId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     RoundId = table.Column<int>(nullable: false),
                     Headshot = table.Column<bool>(nullable: false)
@@ -56,7 +59,8 @@ namespace RSixSiegeHUD.Migrations
                 columns: table => new
                 {
                     MatchId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     ScoreBlueTeam = table.Column<int>(nullable: false),
                     ScoreOrangeTeam = table.Column<int>(nullable: false),
                     MatchToken = table.Column<string>(nullable: true)
@@ -71,7 +75,8 @@ namespace RSixSiegeHUD.Migrations
                 columns: table => new
                 {
                     MatchOutcomeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     MatchId = table.Column<int>(nullable: false),
                     Outcome = table.Column<string>(nullable: true)
@@ -86,7 +91,8 @@ namespace RSixSiegeHUD.Migrations
                 columns: table => new
                 {
                     PlayerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     IsLocal = table.Column<bool>(nullable: false),
                     UbisoftAccountToken = table.Column<string>(nullable: true),
@@ -109,7 +115,8 @@ namespace RSixSiegeHUD.Migrations
                 columns: table => new
                 {
                     RoundOutcomeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     RoundId = table.Column<int>(nullable: false),
                     Outcome = table.Column<string>(nullable: true)
@@ -124,7 +131,8 @@ namespace RSixSiegeHUD.Migrations
                 columns: table => new
                 {
                     RoundId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     MatchId = table.Column<int>(nullable: false),
                     RoundNumber = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
@@ -141,7 +149,7 @@ namespace RSixSiegeHUD.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(nullable: true),
                     UbisoftId = table.Column<string>(nullable: true),
                     OverWolfId = table.Column<string>(nullable: true)

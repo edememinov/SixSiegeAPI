@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RSixSiegeHUD.Data.Entities
 {
-    public class Kill
+    public class Kill : TimeStampObject
     {
         [Key]
         public int KillId { get; set; }
