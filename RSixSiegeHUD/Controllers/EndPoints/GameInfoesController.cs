@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RSixSiegeHUD.Data;
-using RSixSiegeHUD.Models;
+using RSixSiegeHUD.Data.Concrete;
+using RSixSiegeHUD.Data.Entities;
 
-namespace RSixSiegeHUD.Controllers
+namespace RSixSiegeHUD.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

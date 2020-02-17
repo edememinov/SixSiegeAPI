@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RSixSiegeHUD.Data;
+using RSixSiegeHUD.Data.Concrete;
 using RSixSiegeHUD.Infrastructure.Middleware;
 
-namespace RSixSiegeHUD
+namespace RSixSiegeHUD.API
 {
     public class Startup
     {
@@ -31,12 +33,11 @@ namespace RSixSiegeHUD
             services.AddDbContext<ApplicationDbContext>
                 (options => options.UseSqlServer(connection));
             services.AddCors();
-            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -45,9 +46,6 @@ namespace RSixSiegeHUD
             app.UseCors(
                 options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowedToAllowWildcardSubdomains().AllowCredentials()
             );
-            app.UseMvc();
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
         }
     }
 }

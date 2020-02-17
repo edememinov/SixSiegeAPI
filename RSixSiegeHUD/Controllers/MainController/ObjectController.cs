@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RSixSiegeHUD.Data.Concrete;
 using RSixSiegeHUD.Data.Entities;
+using RSixSiegeHUD.Data.ViewModel;
 using RSixSiegeHUD.Infrastructure;
-using RSixSiegeHUD.ViewModel;
 
-namespace RSixSiegeHUD.Controllers
+namespace RSixSiegeHUD.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
