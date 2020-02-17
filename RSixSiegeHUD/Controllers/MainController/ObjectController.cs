@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RSixSiegeHUD.Data;
+using RSixSiegeHUD.Data.Concrete;
+using RSixSiegeHUD.Data.Entities;
 using RSixSiegeHUD.Infrastructure;
-using RSixSiegeHUD.Models;
 using RSixSiegeHUD.ViewModel;
 
 namespace RSixSiegeHUD.Controllers
@@ -41,6 +39,7 @@ namespace RSixSiegeHUD.Controllers
 
         // POST: api/Object
         [HttpPost(Name = "Match")]
+        [EnableCors]
         public void Post([FromBody] dynamic jsonObject)
         {
             GeneralObjectCreator generalObjectCreator = new GeneralObjectCreator();
